@@ -2,6 +2,7 @@
 CREATE TABLE users(
     id CHAR(36) PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
+    email varchar(40) NOT NULL,
     phone VARCHAR(20) UNIQUE NOT NULL,
     password CHAR(60) NOT NULL,
     photo VARCHAR(100) NOT NULL DEFAULT 'photo.jpg'
@@ -52,7 +53,7 @@ CREATE TABLE group_members(
 -- Creating table
 CREATE TABLE messages(
     id CHAR(36) PRIMARY KEY,
-    room_id CHAR(36) UNIQUE NOT NULL,
+    room_id CHAR(36) NOT NULL,
     sender_id CHAR(36) NOT NULL,
     messages TEXT NOT NULL,
     sent_at TIMESTAMP NOT NULL DEFAULT NOW()

@@ -1,41 +1,42 @@
 const Pool = require("../config/db")
 
-const selectAllTickets = (queryObject) => {
-  let conditional = ``
-  if (queryObject && queryObject.id_passenger){
-    conditional = `WHERE id_passenger='${queryObject.id_passenger}'`
-  }
-  return Pool.query(`SELECT * FROM tickets ${conditional} ORDER BY code ASC`)
+const selectAllConversation = () => {
+  return Pool.query(`SELECT * FROM conversations`)
 }
 
-const selectDetailTicket = (queryId) => {
-  return Pool.query("SELECT * FROM tickets WHERE id=$1", [queryId])
+const selectDetailConversation = (queryId) => {
+  return Pool.query(`SELECT * FROM conversations WHERE id='${queryId}'`)
 }
 
-const insertTicket = (queryObject) => {
-  const { queryId, id_passenger, code } = queryObject
+const selectConversationsByUserId = (queryId) => {
+  return Pool.query(`SELECT * FROM conversations WHERE (user_id_1='${queryId}') OR (user_id_2='${queryId}')`)
+}
+
+const insertConversation = (queryObject) => {
+  const { queryId, user_id_1, user_id_2} = queryObject
   return Pool.query(
-      `INSERT INTO tickets(id, id_passenger, code) ` +
-      `VALUES('${queryId}', '${id_passenger}', '${code}')`
+      `INSERT INTO conversations(id, user_id_1, user_id_2)`+
+      `VALUES('${queryId}', '${user_id_1}', '${user_id_2}')`
   );
 }
 
-const updateTicket = (queryObject) => {
-  const { queryId, id_passenger, code } = queryObject
+const updateConversation = (queryObject) => {
+  const { queryId, user_id_1, user_id_2 } = queryObject
   return Pool.query(
-      `UPDATE tickets SET id_booking='${id_passenger}',` +
-      `code='${code}' WHERE id='${queryId}'`
+      `UPDATE conversations SET user_id_1='${user_id_1}', user_id_2='${user_id_2}'`+
+      `WHERE id='${queryId}'`
   );
 }
 
-const deleteTicket = (queryId) => {
-  return Pool.query(`DELETE FROM tickets WHERE id='${queryId}'`)
+const deleteConversation = (queryId) => {
+  return Pool.query(`DELETE FROM conversations WHERE id='${queryId}'`)
 }
 
 module.exports = { 
-  selectAllTickets,
-  selectDetailTicket,
-  insertTicket,
-  updateTicket,
-  deleteTicket
+  selectAllConversation,
+  selectDetailConversation,
+  selectConversationsByUserId,
+  insertConversation,
+  updateConversation,
+  deleteConversation
 }

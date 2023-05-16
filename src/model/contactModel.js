@@ -1,41 +1,37 @@
 const Pool = require("../config/db")
 
-const selectAllTickets = (queryObject) => {
-  let conditional = ``
-  if (queryObject && queryObject.id_passenger){
-    conditional = `WHERE id_passenger='${queryObject.id_passenger}'`
-  }
-  return Pool.query(`SELECT * FROM tickets ${conditional} ORDER BY code ASC`)
+const selectAllContacts = () => {
+  return Pool.query(`SELECT * FROM contacts ORDER BY contact_name ASC`)
 }
 
-const selectDetailTicket = (queryId) => {
-  return Pool.query("SELECT * FROM tickets WHERE id=$1", [queryId])
+const selectDetailContact = (queryId) => {
+  return Pool.query("SELECT * FROM contacts WHERE id=$1", [queryId])
 }
 
-const insertTicket = (queryObject) => {
-  const { queryId, id_passenger, code } = queryObject
+const insertContact = (queryObject) => {
+  const { queryId, user_id, contact_phone, contact_name } = queryObject
   return Pool.query(
-      `INSERT INTO tickets(id, id_passenger, code) ` +
-      `VALUES('${queryId}', '${id_passenger}', '${code}')`
+      `INSERT INTO contacts(id, user_id, contact_phone, contact_name) ` +
+      `VALUES('${queryId}', '${user_id}', '${contact_phone}', '${contact_name}')`
   );
 }
 
-const updateTicket = (queryObject) => {
-  const { queryId, id_passenger, code } = queryObject
+const updateContact = (queryObject) => {
+  const { queryId, user_id, contact_phone, contact_name } = queryObject
   return Pool.query(
-      `UPDATE tickets SET id_booking='${id_passenger}',` +
-      `code='${code}' WHERE id='${queryId}'`
+      `UPDATE contacts SET user_id='${user_id}',` +
+      `contact_phone='${contact_phone}', contact_name='${contact_name}' WHERE id='${queryId}'`
   );
 }
 
-const deleteTicket = (queryId) => {
-  return Pool.query(`DELETE FROM tickets WHERE id='${queryId}'`)
+const deleteContact = (queryId) => {
+  return Pool.query(`DELETE FROM contacts WHERE id='${queryId}'`)
 }
 
 module.exports = { 
-  selectAllTickets,
-  selectDetailTicket,
-  insertTicket,
-  updateTicket,
-  deleteTicket
+  selectAllContacts,
+  selectDetailContact,
+  insertContact,
+  updateContact,
+  deleteContact
 }

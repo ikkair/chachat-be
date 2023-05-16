@@ -15,9 +15,9 @@ router.get("/:id", userController.getDetailUser);
 router.post("/register", upload.none(), userController.registerUser);
 router.post("/refresh-token", userController.refreshToken);
 router.put(
-    "/",
+    "/:id",
     authMiddleware.protect,
-    upload.none(),
+    upload.single("photo"),
     userController.updateUser
 );
 router.delete(
@@ -25,7 +25,7 @@ router.delete(
     authMiddleware.protect,
     userController.deleteUser
 );
-router.post("/login", upload.none(), userController.loginUser);
+router.post("/login", userController.loginUser);
 
 // Export router to index.js at router folder
 module.exports = router;

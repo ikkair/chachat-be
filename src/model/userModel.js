@@ -15,19 +15,19 @@ function selectUser(queryId) {
 
 // Function to insert
 function insertUser(queryObject) {
-    const { queryPwd, queryId, name, email, phone, queryFilename } = queryObject;
+    const { queryPwd, queryId, name, email, phone } = queryObject;
     return pool.query(
-        `INSERT INTO users(id, name, email, phone, password, photo) ` +
-        `VALUES('${queryId}', '${name}', '${email}', '${phone}', '${queryPwd}', '${queryFilename}')`
+        `INSERT INTO users(id, name, email, phone, password) ` +
+        `VALUES('${queryId}', '${name}', '${email}', '${phone}', '${queryPwd}')`
     );
 }
 
 // Function to update record
 function updateUser(queryObject) {
-    const { queryId, name, email, phone, queryPwd, queryFilename } =   queryObject;
+    const { queryId, name, email, phone, queryFilename } =   queryObject;
     return pool.query(
         `UPDATE users SET name='${name}', email='${email}',` +
-        `phone='${phone}', password='${queryPwd}', photo='${queryFilename}' WHERE id='${queryId}'`
+        `phone='${phone}', photo='${queryFilename}' WHERE id='${queryId}'`
     );
 }
 

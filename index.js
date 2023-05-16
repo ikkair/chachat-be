@@ -1,6 +1,12 @@
 // Import environtment variable
 require("dotenv").config();
 
+// Import model
+const conversationModel = require("./src/model/conversationModel")
+
+// Import Controller
+const messageController = require("./src/controller/messageController")
+
 // Import
 const mainRouter = require("./src/router/index"); // Import main router
 const express = require("express"); // Import express library
@@ -12,7 +18,12 @@ const { createServer } = require("http")
 const { Server } = require("socket.io")
 const app = express(); // Import express
 const httpServer = createServer(app)
-const io = new Server(httpServer)
+const io = new Server(httpServer, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+})
 const commonHelper = require("./src/helper/common");
 
 // Use middleware
@@ -44,8 +55,21 @@ app.use((err, req, res, next) => {
     res.status(statusCode).json(err)
 })
 
-io.on("connection", (socket) => {
-  // ...
+io.on("connection", async (socket) => {
+    console.log(socket.request._query["id"])
+    conversationModel.selectConversationsByUserId(socket.request._query["id"])
+        .then((res)=>{
+            res.rows.map((element)=>{
+                socket.join(element.id)
+            })
+        })
+    socket.on("disconnect", ()=>{
+        console.log(`${socket.id} is disconnecting`)
+    })
+    socket.on("sendMessage", ({message, sender_id, room_id})=>{
+        io.to(`${room_id}`).emit("receiveMessage", {message, sender_id})
+        messageController.addMessageManual({message, sender_id, room_id})
+    })
 });
 
 // Listening port awaiting requests
