@@ -26,7 +26,7 @@
 
 # About The Project
 
-Chachat is a website for communicating online and in real-time. Users can create an account, change profile information, and communicate with others in text form.
+Chachat is a website that has been created to facilitate communication among users through real-time messaging. Users are able to create an account, modify their profile, and engage in text-based communication with others.
 
 ## Built With
 
