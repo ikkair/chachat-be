@@ -20,8 +20,8 @@ const app = express(); // Import express
 const httpServer = createServer(app)
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"]
+        origin: [`${process.env.FE}`],
+        methods: ["GET","PUT","POST","DELETE"]
     }
 })
 const commonHelper = require("./src/helper/common");
@@ -29,6 +29,7 @@ const commonHelper = require("./src/helper/common");
 // Use middleware
 app.use(express.json());
 app.use(cors({
+    origin: [`${process.env.FE}`],
     methods: ["GET","PUT","POST","DELETE"]
 }));
 app.use(morgan("dev"));

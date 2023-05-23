@@ -55,6 +55,6 @@ CREATE TABLE messages(
     id CHAR(36) PRIMARY KEY,
     room_id CHAR(36) NOT NULL,
     sender_id CHAR(36) NOT NULL,
-    messages TEXT NOT NULL,
+    message TEXT NOT NULL,
     sent_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
