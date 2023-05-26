@@ -7,9 +7,7 @@
   <p align="center">
     <a href="https://github.com/ikkair/chachat-be"><strong>Explore the docs »</strong></a>
     <br />
-    <a href="#">View Demo</a>
-    ·
-    <a href="#">Api Demo</a>
+    <a href="https://chachat-fe-ikkair.vercel.app/">View Demo</a>
   </p>
 </p>
 
@@ -116,4 +114,4 @@ API endpoint list are also available as published postman documentation
 
 :rocket: [`Backend Chachat`](https://github.com/ikkair/chachat-be)
 
-:rocket: [`Demo Chachat`](#)
+:rocket: [`Demo Chachat`](https://chachat-fe-ikkair.vercel.app/)
